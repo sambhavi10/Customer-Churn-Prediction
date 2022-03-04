@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Segmentation</title>
+</head>
+
+<!-- Adding styles like colour, height, width, border to our html page -->
+<style>
+    input[type=text],
+    select {
+        width: 80%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        display: inline-block;
+        border-radius: 4px;
+        box-sizing: border-box;
+        font-weight: bolder;
+    }
+
+    input[type=submit] {
+        width: 80%;
+        background-color: skyblue;
+        color: black;
+        padding: 14px 20px;
+        margin: 8px 0;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        font-size: 100;
+        font-weight: bolder;
+    }
+
+
+    input[type=submit]:hover {
+        background-color: red;
+    }
+/* 
+    form {
+        border-radius: 35px;
+        padding-top: 2%;
+        font-weight: bolder;
+        opacity: 1;
+    } */
+
+    div {
+
+        border-radius: 5px;
+        margin-left: 12%;
+        width: 60%;
+
+    }
+
+    h1 {
+        color: rgb(4, 11, 51);
+        font-size: 40px;
+        font-weight: bolder;
+    }
+
+    h2 {
+        color: red;
+    }
+
+    body {
+
+        background-image: url("static/cust.jpg");
+        background-repeat: no-repeat;
+        background-size: cover;
+        text-align: center;
+        padding: 0px;
+    }
+</style>
+
+<body>
+
+    <h1>Customer Segmentation Cluster Prediction</h1>
+
+    <div>z
+
+        <form action="{{ url_for('predict')}}" method="post" style="background-color:black">
+
+            <label for="Balance">Balance Amount</label><br>
+            <input type="text" id="Balance" name="Balance" placeholder="Enter Balance" required="required"><br>
+
+            <label for="Purchases">Purchases</label><br>
+            <input type="text" id="Purchases" name="Purchases" placeholder="Enter Purchases" required="required"><br>
+
+            <label for="Oneoff_Purchases">Oneoff Purchases</label><br>
+            <input type="text" id="Oneoff_Purchases" name="Oneoff_Purchases" placeholder="Enter Oneoff Purchases"
+                required="required"><br>
+
+            <label for="Installment_Purchases">Installment Purchases</label><br>
+            <input type="text" id="Installment_Purchases" name="Installment_Purchases"
+                placeholder="Enter Installment Purchases" required="required"><br>
+
+            <label for="Cash_Advance">Cash Advance</label><br>
+            <input type="text" id="Cash_Advance" name="Cash_Advance" placeholder="Enter Cash Advance"
+                required="required"><br>
+
+            <label for="Purchases_Frequency">Purchases Frequency</label><br>
+            <input type="text" id="Purchases_Frequency" name="Purchases_Frequency"
+                placeholder="Enter Purchases Frequency" required="required"><br>
+
+            <label for="Oneoff_Purchases_Frequency">Oneoff Purchases Frequency</label><br>
+            <input type="text" id="Oneoff_Purchases_Frequency" name="Oneoff_Purchases_Frequency"
+                placeholder="Enter Oneoff_Purchases_Frequency" required="required"><br>
+
+            <label for="Purchases_Installments_Frequency">Purchases Installments Frequency</label><br>
+            <input type="text" id="Purchases_Installments_Frequency" name="Purchases_Installments_Frequency"
+                placeholder="Enter Purchases_Installments_Frequency" required="required"><br>
+
+            <label for="Cash_Advance_Frequency">Cash Advance Frequency</label><br>
+            <input type="text" id="Cash_Advance_Frequency" name="Cash_Advance_Frequency"
+                placeholder="Enter Cash_Advance_Frequency" required="required"><br>
+
+            <label for="Cash_Advance_Trx">Cash Advance Trx</label><br>
+            <input type="text" id="Cash_Advance_Trx" name="Cash_Advance_Trx" placeholder="Enter Cash_Advance_Trx"
+                required="required"><br>
+
+            <label for="Purchases_Trx">Purchases Trx</label><br>
+            <input type="text" id="Purchases_Trx" name="Purchases_Trx" placeholder="Enter Purchases_Trx"
+                required="required"><br>
+
+            <label for="Credit_Limit">Credit Limit</label><br>
+            <input type="text" id="Credit_Limit" name="Credit_Limit" placeholder="Enter Credit_Limit"
+                required="required"><br>
+
+            <label for="Payments">Payments</label><br>
+            <input type="text" id="Payments" name="Payments" placeholder="Enter Payments" required="required"><br>
+            <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+
+
+        <!-- Html form which will get all the values from user -->
+        <!-- <form action="{{ url_for('predict')}}" method="post" style="background-color:black">
+            <div class="form-group">
+                <label for="Balance">Balance Amount</label>
+                <input type="text" id="Balance" class="form-control" name="Balance" placeholder="Enter Balance"
+                    required="required">
+            </div>
+
+            <div class="form-group">
+                <label for="Purchases">Purchases</label>
+                <input type="text" id="Purchases" class="form-control" name="Purchases" placeholder="Enter Purchases"
+                    required="required">
+            </div>
+
+            <div class="form-group">
+                <label for="Oneoff_Purchases">Oneoff Purchases</label>
+                <input type="text" id="Oneoff_Purchases" class="form-control" name="Oneoff_Purchases"
+                    placeholder="Enter Oneoff Purchases" required="required">
+            </div>
+
+            <div class="form-group">
+                <label for="Installment_Purchases">Installment Purchases</label>
+                <input type="text" id="Installment_Purchases" class="form-control" name="Installment_Purchases"
+                    placeholder="Enter Installment Purchases" required="required">
+            </div>
+
+            <div class="form-group">
+                <label for="Cash_Advance">Cash Advance</label>
+                <input type="text" id="Cash_Advance" class="form-control" name="Cash_Advance"
+                    placeholder="Enter Cash Advance" required="required">
+            </div>
+
+            <div class="form-group">
+                <label for="Purchases_Frequency">Purchases Frequency</label>
+                <input type="text" id="Purchases_Frequency" class="form-control" name="Purchases_Frequency"
+                    placeholder="Enter Purchases Frequency" required="required">
+            </div>
+
+            <div class="form-group">
+                <label for="Oneoff_Purchases_Frequency">Oneoff Purchases Frequency</label>
+                <input type="text" id="Oneoff_Purchases_Frequency" class="form-control"
+                    name="Oneoff_Purchases_Frequency" placeholder="Enter Oneoff_Purchases_Frequency"
+                    required="required">
+            </div>
+
+            <div class="form-group">
+                <label for="Purchases_Installments_Frequency">Purchases Installments Frequency</label>
+                <input type="text" id="Purchases_Installments_Frequency" class="form-control"
+                    name="Purchases_Installments_Frequency" placeholder="Enter Purchases_Installments_Frequency"
+                    required="required">
+            </div>
+
+            <div class="form-group">
+                <label for="Cash_Advance_Frequency">Cash Advance Frequency</label>
+                <input type="text" id="Cash_Advance_Frequency" class="form-control" name="Cash_Advance_Frequency"
+                    placeholder="Enter Cash_Advance_Frequency" required="required">
+            </div>
+
+            <div class="form-group">
+                <label for="Cash_Advance_Trx">Cash Advance Trx</label>
+                <input type="text" id="Cash_Advance_Trx" class="form-control" name="Cash_Advance_Trx"
+                    placeholder="Enter Cash_Advance_Trx" required="required">
+            </div>
+
+            <div class="form-group">
+                <label for="Purchases_Trx">Purchases Trx</label>
+                <input type="text" id="Purchases_Trx" class="form-control" name="Purchases_Trx"
+                    placeholder="Enter Purchases_Trx" required="required">
+            </div>
+
+            <div class="form-group">
+                <label for="Credit_Limit">Credit Limit</label>
+                <input type="text" id="Credit_Limit" class="form-control" name="Credit_Limit"
+                    placeholder="Enter Credit_Limit" required="required">
+            </div>
+
+            <div class="form-group">
+                <label for="Payments">Payments</label>
+                <input type="text" id="Payments" name="Payments" placeholder="Enter Payments" required="required">
+            </div> -->
+
+        <!-- submit button -->
+        <!-- <button type="submit" class="btn btn-primary">Submit</button>
+        </form> -->
+    </div>
+    <br>
+    <!-- the predicted text -->
+    <h2>{{ prediction_text }}</h2>
+
+</body>
+
+</html>
